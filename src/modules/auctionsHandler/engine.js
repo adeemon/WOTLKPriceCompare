@@ -2,21 +2,19 @@ import { DataParser } from "../dataParser";
 import { AuctionsFilter } from "./auctionsFilter";
 import { suggestedAuctions } from "./suggestedAuctions"
 import { RealmList } from "./realms"
-
-class AHEngine {
-    static async init() {
-        let auctionID = 6;
-        let itemID = 43102;
-        let realmID = 4453;
-        //this.getAuctionsInfo('4453', '6');
-        //console.log(suggestedAuctions[itemID]);
-        //let output = await this.getItemsInfo(itemID, 6);
-        let output = await this.getAllItemsCompare(auctionID);
-        console.log(output);
+import { configAH } from './config'
+export class AHengine {
+    constructor(auctionID) {
+        this.auctionID = auctionID;
+        this.AHDB = {};
+    }
+    async init() {
+        let output = await this.getAllItemsCompare(configAH.AHid);
+        return (output);
     }
 
-    static async getAuctionsInfo(realmID, auctionID) {
-        let auctionsList = await (this.getAuctionsFromRealm(realmID, auctionID));
+    async getAuctionsInfo(realmID) {
+        let auctionsList = await (this.getAuctionsFromRealm(realmID, this.auctionID));
         let outputMap = new Map();
 
         for (let key in suggestedAuctions) {
@@ -27,30 +25,36 @@ class AHEngine {
         return outputMap;
     }
 
-    static async getItemsCompare(itemID, auctionID) {
+    async getItemsCompare(itemID) {
         if (!suggestedAuctions.hasOwnProperty(itemID)) {
             return 0;
         }
         let realmList = new RealmList();
         let outputMap = new Map();
-        let realms = realmList.getRealmsList(auctionID);
+        let realms = realmList.getRealmsList(this.auctionID);
         for (let realm in realms) {
-            let auctionsList = await this.getAuctionsFromRealm(realms[realm], auctionID);
+            let auctionsList = await this.getAuctionsFromRealm(realms[realm], this.auctionID);
             let realmItemPrice = await AuctionsFilter.getItemAvgPrice(itemID, auctionsList);
             outputMap.set(realm, realmItemPrice);
         }
         return outputMap;
     }
 
-    static async getAuctionsFromRealm(realmID, auctionID) {
-        return await DataParser.getAuctionsFromResponse(DataParser.getDataFromRealm(realmID, auctionID));
+    async getAuctionsFromRealm(realmID) {
+        if (this.AHDB.hasOwnProperty(realmID)) {
+            return this.AHDB[realmID]
+        } else {
+            const data = DataParser.getAuctionsFromResponse(DataParser.getDataFromRealm(realmID, this.auctionID));
+            this.AHDB[realmID] = await data;
+            return data;
+        }
     }
 
-    static async getItemsInfo(itemID, auctionID) {
+    async getItemsInfo(itemID) {
         let itemData = new Map();
         let itemNameMap = new Map();
         let output = new Map();
-        itemData = await this.getItemsCompare(itemID, auctionID);
+        itemData = await this.getItemsCompare(itemID, this.auctionID);
         itemNameMap.set('Item name', suggestedAuctions[itemID]);
         itemData = await new Map([...itemData].sort((a, b) => {
             return a[1] - b[1]
@@ -59,15 +63,14 @@ class AHEngine {
         return output;
     }
 
-    static async getAllItemsCompare(auctionID) {
+    async getAllItemsCompare() {
         let output = [];
         for (let item in suggestedAuctions) {
-            let itemInfo = await this.getItemsInfo(item - 0, auctionID);
+            let itemInfo = await this.getItemsInfo(item - 0, this.auctionID);
             output.push(itemInfo);
+            // TODO: это надо удалить, когда буду переделывать под нормальный интерфейс
             console.log(itemInfo);
         }
         return output;
     }
 }
-
-export { AHEngine }
