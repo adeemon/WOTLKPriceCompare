@@ -1,13 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { DataParser } from './modules/dataParser';
-import { AuctionsFilter } from "./modules/auctionsHandler";
-import { AHEngine } from "./modules/auctionsHandler/engine";
-import { AuthToken } from './modules/dataParser/authtoken';
-
+import { AHengine } from "./modules/auctionsHandler/engine";
+import { configAH } from './modules/auctionsHandler/config'
 
 
 // const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -19,7 +14,8 @@ import { AuthToken } from './modules/dataParser/authtoken';
 
 class Main {
     static init() {
-        AHEngine.init();
+        var engine = new AHengine(configAH.AHid);
+        engine.init();
     }
 }
 
