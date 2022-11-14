@@ -1,5 +1,5 @@
 class AuctionsFilter {
-    static getFirstAuctionsByID(itemID, auctionsList){
+    static getFirstAuctionsByID(itemID, auctionsList) {
         let auctions = auctionsList;
         let filteredAuctions = [];
         filteredAuctions = auctions.filter(auction => auction.item.id === itemID);
@@ -12,11 +12,11 @@ class AuctionsFilter {
         return auctionsList.sort((a, b) => a.buyout - b.buyout);
     }
 
-    static reduceZeroBuyoutAuctions(auctionsList){
+    static reduceZeroBuyoutAuctions(auctionsList) {
         return auctionsList.filter(element => element.buyout >= 1);
     }
 
-    static getItemAvgPrice(itemID, auctionsList){
+    static getItemAvgPrice(itemID, auctionsList) {
         let auctions = auctionsList;
         let itemAuctions = this.getFirstAuctionsByID(itemID, auctions);
         let average = itemAuctions.reduce((sum, current) => {
