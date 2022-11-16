@@ -68,8 +68,6 @@ export class AHengine {
         for (let item in suggestedAuctions) {
             let itemInfo = await this.getItemsInfo(item - 0, this.auctionID);
             output.push(itemInfo);
-            // TODO: это надо удалить, когда буду переделывать под нормальный интерфейс
-            console.log(itemInfo);
         }
         return output;
     }
