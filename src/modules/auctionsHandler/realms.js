@@ -2,33 +2,35 @@ class RealmList {
     constructor() {
         this.hordeRealms = {
             Auberdine: 4441,
-            Lakeshire: 4442,
+            // Lakeshire: 4442,
             MirageRaceway: 4454,
             Razorfen: 4455,
             NethergradeKeep: 4456,
             Sulfuron: 4464,
             FLAMEGOR: 4474,
-            Venoxis: 4477,
+            //Venoxis: 4477,
             Mograine: 4701,
-            Amnenar: 4703,
-            Ashbringer: 4742,
-            Transcendence: 4745,
-            Giantstalker: 4811,
-            Mandokir: 4813
+            // Amnenar: 4703,
+            // Ashbringer: 4742,
+            // Transcendence: 4745,
+            // Giantstalker: 4811,
+            Mandokir: 4813,
+            //Gehenas: 4476,
+            Golemagg: 4465,
         }
         this.allianceRelms = {
-            Everlook: 4440,
+            //Everlook: 4440,
             Auberdine: 4441,
             Lakeshire: 4442,
             PyrewoodVillage: 4453,
-            MirageRaceway: 4454,
-            Razorfen: 4455,
+            //MirageRaceway: 4454,
             NethergradeKeep: 4456,
             Sulfuron: 4464,
             FLAMEGOR: 4474,
-            Venoxis: 4477,
+            Firemaw: 4467,
+            //Venoxis: 4477,
             Earthshaker: 4749,
-            Giantstalker: 4811
+            PyrewoodVillage: 4453,
         }
         this.allRealms = {
             Everlook: 4440,

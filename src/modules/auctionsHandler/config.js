@@ -1,3 +1,3 @@
 export const configAH = {
-    AHid: 6
+    AHid: 2
 }

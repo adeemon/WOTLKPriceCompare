@@ -2,11 +2,12 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import { AHengine } from './modules/auctionsHandler/engine'
 import { ItemNotesListContainer } from './containers/ItemNotesListContainer'
+import { ahID } from './config'
 export function App() {
     const [itemsData, setItemsData] = useState([]);
     useEffect(()=> {
         async function getData() {
-            let engine = new AHengine(6);
+            let engine = new AHengine(ahID);
             const auctionsData = await engine.init();
             setItemsData(auctionsData);
         }
